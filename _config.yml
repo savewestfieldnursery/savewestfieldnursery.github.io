@@ -1,6 +1,6 @@
 title: Queen Mary!
 logo: /assets/img/toddler.jpeg
 description: brought to you by parents and carers of Westfield Nursery
-show_downloads: true
+show_downloads: false
 google_analytics:
 theme: jekyll-theme-minimal
