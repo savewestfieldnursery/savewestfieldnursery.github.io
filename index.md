@@ -1,11 +1,8 @@
 ---
 layout: default
 ---
+## [Help us by signing our petition here](https://www.change.org/p/save-westfield-nursery-queen-mary-university-don-t-evict-our-toddlers)
 <script src="https://easyfaq.io/js/easyfaq.js" id="mfkim"></script>
-
-## Help us by signing our petition here:
-
-[Link to Change.org Petition](https://www.change.org/p/save-westfield-nursery-queen-mary-university-don-t-evict-our-toddlers)
 
 ## Media coverage:
 
