@@ -19416,4 +19416,242 @@ _variables ()
                 COMPREPLY+=(${vars[*]});
             fi;
         else
-            COMPREPLY+=($(compgen -A variable -P '$' -- "${BASH_REMATCH[3]}")
+            COMPREPLY+=($(compgen -A variable -P '$' -- "${BASH_REMATCH[3]}"));
+        fi;
+        return 0;
+    else
+        if [[ $cur =~ ^(\$\{[#!]?)([A-Za-z0-9_]*)\[([^]]*)$ ]]; then
+            local IFS='
+';
+            COMPREPLY+=($(compgen -W '$(printf %s\\n "${!'${BASH_REMATCH[2]}'[@]}")'             -P "${BASH_REMATCH[1]}${BASH_REMATCH[2]}[" -S ']}' -- "${BASH_REMATCH[3]}"));
+            if [[ ${BASH_REMATCH[3]} == [@*] ]]; then
+                COMPREPLY+=("${BASH_REMATCH[1]}${BASH_REMATCH[2]}[${BASH_REMATCH[3]}]}");
+            fi;
+            __ltrim_colon_completions "$cur";
+            return 0;
+        else
+            if [[ $cur =~ ^\$\{[#!]?[A-Za-z0-9_]*\[.*\]$ ]]; then
+                COMPREPLY+=("$cur}");
+                __ltrim_colon_completions "$cur";
+                return 0;
+            fi;
+        fi;
+    fi;
+    return 1
+}
+_xfunc () 
+{ 
+    set -- "$@";
+    local srcfile=$1;
+    shift;
+    declare -F $1 &> /dev/null || __load_completion "$srcfile";
+    "$@"
+}
+_xinetd_services () 
+{ 
+    local xinetddir=${BASHCOMP_XINETDDIR:-/etc/xinetd.d};
+    if [[ -d $xinetddir ]]; then
+        local IFS=' 	
+' reset=$(shopt -p nullglob);
+        shopt -s nullglob;
+        local -a svcs=($(printf '%s\n' $xinetddir/!($_backup_glob)));
+        $reset;
+        ((!${#svcs[@]})) || COMPREPLY+=($(compgen -W '${svcs[@]#$xinetddir/}' -- "${cur-}"));
+    fi
+}
+command_not_found_handle () 
+{ 
+    if [ -x /usr/lib/command-not-found ]; then
+        /usr/lib/command-not-found -- "$1";
+        return $?;
+    else
+        if [ -x /usr/share/command-not-found/command-not-found ]; then
+            /usr/share/command-not-found/command-not-found -- "$1";
+            return $?;
+        else
+            printf "%s: command not found\n" "$1" 1>&2;
+            return 127;
+        fi;
+    fi
+}
+dequote () 
+{ 
+    eval printf %s "$1" 2> /dev/null
+}
+quote () 
+{ 
+    local quoted=${1//\'/\'\\\'\'};
+    printf "'%s'" "$quoted"
+}
+quote_readline () 
+{ 
+    local ret;
+    _quote_readline_by_ref "$1" ret;
+    printf %s "$ret"
+}
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git commit[K[K[K[K[K[K[K[K[K[K[7mbundle exec jekyll build[27m
+[7mgit add .[27m
+[7mgit commit -m "$message"[27m
+[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbundle exec jekyll build
+git add .
+git commit -m "$message"
+[A
+[?2004lConfiguration file: /home/sylee/Sync/homepage/savewestfieldnursery.github.io/_config.yml
+ Theme Config file: /home/sylee/Sync/homepage/savewestfieldnursery.github.io/_config.yml
+            Source: /home/sylee/Sync/homepage/savewestfieldnursery.github.io
+       Destination: /home/sylee/Sync/homepage/savewestfieldnursery.github.io/_site
+ Incremental build: disabled. Enable with --incremental
+      Generating... 
+                    done in 0.202 seconds.
+ Auto-regeneration: disabled. Use --watch to enable.
+Aborting commit due to empty commit message.
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git config-[K --global-user[K[K[K[K[K uesr.ema[K[K[K[K[K[K[Kser.email "tim.lee@qmul.ac.uk"
+[?2004l[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git config --global user.email "tim.lee@qmul.ac.uk"
+[?2004l[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ 
+[?2004l[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git config --global user.email "tim.lee@qmul.ac.uk"[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kname "Tim Lee"
+[?2004l[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ [7mgit push origin main[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgit push origin main
+[A
+[?2004lerror: src refspec main does not match any
+[31merror: failed to push some refs to 'https://github.com/savewestfieldnursery/savewestfieldnursery.github.io.git'
+[m[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git push origin main
+[?2004lerror: src refspec main does not match any
+[31merror: failed to push some refs to 'https://github.com/savewestfieldnursery/savewestfieldnursery.github.io.git'
+[m[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ ls
+[?2004lanother-page.md  [0m[01;34massets[0m  bootstrap  _config.yml  [01;34mdocs[0m  Gemfile  Gemfile.lock  [01;34m_includes[0m  index.md  jekyll-theme-minimal.gemspec  [01;34m_layouts[0m  LICENSE  README.md  [01;34m_sass[0m  [01;34mscript[0m  [01;34m_site[0m  [01;35mthumbnail.png[0m
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ ^C[?2004l[?2004h[?2004l
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ ^C[?2004l[?2004h[?2004l
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ ^C[?2004l[?2004h[?2004l
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git commit -m "initial commit"
+[?2004l[master f8a9824] initial commit
+ 1 file changed, 19419 insertions(+)
+ create mode 100644 bootstrap
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git push origin main
+[?2004lerror: src refspec main does not match any
+[31merror: failed to push some refs to 'https://github.com/savewestfieldnursery/savewestfieldnursery.github.io.git'
+[m[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git push origin main[C[1@-[1@u[1@ 
+[?2004lerror: src refspec main does not match any
+[31merror: failed to push some refs to 'https://github.com/savewestfieldnursery/savewestfieldnursery.github.io.git'
+[m[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ [7mgit commit -m "initial commit"[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgit commit -m "initial commit"
+[A
+[?2004lOn branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	[31mmodified:   bootstrap[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git push
+[?2004lUsername for 'https://github.com': tim.lee@qmul.ac.uk
+Password for 'https://tim.lee@qmul.ac.uk@github.com': 
+remote: Permission to savewestfieldnursery/savewestfieldnursery.github.io.git denied to savewestfieldnursery.
+fatal: unable to access 'https://github.com/savewestfieldnursery/savewestfieldnursery.github.io.git/': The requested URL returned error: 403
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git push
+[?2004lUsername for 'https://github.com': tim.lee@qmul.ac.k uk
+Password for 'https://tim.lee@qmul.ac.uk@github.com': 
+remote: Permission to savewestfieldnursery/savewestfieldnursery.github.io.git denied to savewestfieldnursery.
+fatal: unable to access 'https://github.com/savewestfieldnursery/savewestfieldnursery.github.io.git/': The requested URL returned error: 403
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git pushcommit -m "initial commit"[7Ppush -u origin maincommit -m "initial commit"push[K
+[?2004lUsername for 'https://github.com': tim.lee@qmul.ac.uk
+Password for 'https://tim.lee@qmul.ac.uk@github.com': 
+remote: Permission to savewestfieldnursery/savewestfieldnursery.github.io.git denied to savewestfieldnursery.
+fatal: unable to access 'https://github.com/savewestfieldnursery/savewestfieldnursery.github.io.git/': The requested URL returned error: 403
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ i[Kgit remote -v
+[?2004lorigin	https://github.com/savewestfieldnursery/savewestfieldnursery.github.io.git (fetch)
+origin	https://github.com/savewestfieldnursery/savewestfieldnursery.github.io.git (push)
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git remote set-url origin git@github.cm[Kom;save[K[K[K[K[K"[K:savewestfieldnursery/safe[K[Kveres[K[K[Kwestfieldnursery.gito[Khub.io.git
+[?2004l[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git remote set-url origin git@github.com:savewestfieldnursery/savewestfieldnursery.github.io.git[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C-v[K[5Ppush
+[?2004lThe authenticity of host 'github.com (20.26.156.215)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git remote -v
+[?2004lorigin	git@github.com:savewestfieldnursery/savewestfieldnursery.github.io.git (fetch)
+origin	git@github.com:savewestfieldnursery/savewestfieldnursery.github.io.git (push)
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ git remote -v[5Ppushremote set-url origin git@github.com:savewestfieldnursery/savewestfieldnursery.github.io.git[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cpush[K
+[?2004lgit@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ [7mssh-add -l -E sha256[27mssh-add -l -E sha256
+[?2004lThe agent has no identities.
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ [7mssh-keygen -t ed25519 -C "your_email@example.com"[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cssh-keygen -t ed25519 -C "your_email@example.com"[C[C[C[1P@example.com"[1P@example.com"[1P@example.com"[1P@example.com"[1P@example.com"[1P@example.com"[1P@example.com"[1P@example.com"[1P@example.com"[1P@example.com"s@example.com"y@example.com"l@example.com"e@example.com"e@example.com".@example.com"t@example.com"i@example.com"[C@example.com"g@example.com"[1P@example.com"[1Pexample.com"m@example.com"[C@example.com"g@example.com"m@example.com"a@example.com"i@example.com"l@example.com".@example.com"c@example.com"o@example.com"m@example.com"[C[C[C[C[C[C[C[C[C[C[C[C[1P"[1P"[1P"[1P"[1P"[1P"[1P"[1P"[1P"[1P"[1P"[1P"
+[?2004lGenerating public/private ed25519 key pair.
+Enter file in which to save the key (/home/sylee/.ssh/id_ed25519): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/sylee/.ssh/id_ed25519
+Your public key has been saved in /home/sylee/.ssh/id_ed25519.pub
+The key fingerprint is:
+SHA256:Pva/8t6p/IiJJZZ9X88vOjpAQjzvEJIvOKgo+aUELEs sylee.tim@gmail.com
+The key's randomart image is:
++--[ED25519 256]--+
+|     o           |
+|    o =          |
+|.. . + +         |
+|+Eo . + o        |
+|=+ . . =S        |
+|* . .  .oo       |
+|.o o    B.o .   .|
+|  o    o *o=.+.+.|
+|        . =BX*=.=|
++----[SHA256]-----+
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ ssh-keygen -t ed25519 -C "sylee.tim@gmail.com"[1Ptim@gmail.com"[1Ptim@gmail.com"[1Ptim@gmail.com"[1Ptim@gmail.com"[1Ptim@gmail.com"[1Ptim@gmail.com"[C[C[C.@gmail.com"l@gmail.com"e@gmail.com"e@gmail.com"[Cqgmail.com"ugmail.com"lgmail.com"[1Pgmail.com"[1Pgmail.com"mgmail.com"ugmail.com"lgmail.com".gmail.com"agmail.com"cgmail.com".gmail.com"ugmail.com".kgmail.com"[C[1Pgmail.com"[1Pgmail.com"kgmail.com"[1Pmail.com"[1Pail.com"[1Pil.com"[1Pl.com"[1P.com"[1Pcom"[1Pom"[1Pm"[1P"
+[?2004lGenerating public/private ed25519 key pair.
+Enter file in which to save the key (/home/sylee/.ssh/id_ed25519): 
+/home/sylee/.ssh/id_ed25519 already exists.
+Overwrite (y/n)? n
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ ssh-keygen -t ed25519 -C "tim.lee@qmul.ac.uk"
+[?2004lGenerating public/private ed25519 key pair.
+Enter file in which to save the key (/home/sylee/.ssh/id_ed25519): /home/sylee/.ssh/id_ed2550 20
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/sylee/.ssh/id_ed25520
+Your public key has been saved in /home/sylee/.ssh/id_ed25520.pub
+The key fingerprint is:
+SHA256:kWusoyAs05FGW1J5nPJzX7flYgOeVbw33DbK8duu+IQ tim.lee@qmul.ac.uk
+The key's randomart image is:
++--[ED25519 256]--+
+|    .o .       . |
+|   .o +  .      o|
+|  o .+  o     ..o|
+| . =  o..o  o.o==|
+|  =    oS. o.=+=+|
+|.o .   o  . o+=..|
+|+.o   o     E..oo|
+|.o . . .     o ..|
+|    .       ..oo.|
++----[SHA256]-----+
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ [7meval "$(ssh-agent -s)"[27meval "$(ssh-agent -s)"
+[?2004lAgent pid 50246
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ [7mssh-add ~/.ssh/id_ed25519[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cssh-add ~/.ssh/id_ed25519
+[A
+[?2004lEnter passphrase for /home/sylee/.ssh/id_ed25519: 
+Identity added: /home/sylee/.ssh/id_ed25519 (sylee.tim@gmail.com)
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ ssh-add ~/.ssh/id_ed25519[K[K20
+[?2004lEnter passphrase for /home/sylee/.ssh/id_ed25520: 
+Identity added: /home/sylee/.ssh/id_ed25520 (tim.lee@qmul.ac.uk)
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ [7m$ cat ~/.ssh/id_ed25519.pub[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C$ cat ~/.ssh/id_ed25519.pub      20.pub
+[?2004l$: command not found
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ $ cat ~/.ssh/id_ed25520.pub[1P[1P
+[?2004lssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN4ThsOC4WxMSbcEfiv0IMn50UfheBN6NgifJztbrejz tim.lee@qmul.ac.uk
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ cat ~/.ssh/id_ed25520.pub
+[?2004lssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN4ThsOC4WxMSbcEfiv0IMn50UfheBN6NgifJztbrejz tim.lee@qmul.ac.uk
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ cat ~/.ssh/id_ed25520.pub[1P.pub[1P.pub1.pub9.pub
+[?2004lssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILtdQeB7w32BZVrvMqLDlyQrHwegVlvokruWVqXj60NH sylee.tim@gmail.com
+[?2004h]0;sylee@tim-x1yoga: ~/Sync/homepage/savewestfieldnursery.github.io[01;32msylee@tim-x1yoga[00m:[01;34m~/Sync/homepage/savewestfieldnursery.github.io[00m$ ls
+[?2004lanother-page.md  [0m[01;34massets[0m  bootstrap  _con
