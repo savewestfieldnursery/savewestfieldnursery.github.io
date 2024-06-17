@@ -3,122 +3,101 @@ layout: default
 ---
 <script src="https://easyfaq.io/js/easyfaq.js" id="mfkim"></script>
 
-Text can be **bold**, _italic_, or ~~strikethrough~~.
+[comment]: # Text can be **bold**, _italic_, or ~~strikethrough~~.
 
 [Link to another page](./another-page.html).
 
-There should be whitespace between paragraphs.
+[comment]: # There should be whitespace between paragraphs.
 
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
+[comment]: # There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
 
-# Header 1
+[comment]: # # Header 1
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
+[comment]: # This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
 
-## Header 2
+[comment]: # ## Header 2
 
-> This is a blockquote following a header.
+[comment]: # > This is a blockquote following a header.
 >
-> When something is important enough, you do it even if the odds are not in your favor.
+[comment]: # > When something is important enough, you do it even if the odds are not in your favor.
 
-### Header 3
+[comment]: # ### Header 3
 
-```js
+[comment]: # ```js
 // Javascript code with syntax highlighting.
 var fun = function lang(l) {
   dateformat.i18n = require('./lang/' + l)
   return true;
 }
-```
+[comment]: # ```
 
-```ruby
-# Ruby code with syntax highlighting
+[comment]: # ```ruby
+[comment]: # # Ruby code with syntax highlighting
 GitHubPages::Dependencies.gems.each do |gem, version|
   s.add_dependency(gem, "= #{version}")
 end
-```
+[comment]: # ```
 
-#### Header 4
+[comment]: # #### Header 4
 
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
+[comment]: # *   This is an unordered list following a header.
 
-##### Header 5
+[comment]: # ##### Header 5
 
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
+[comment]: # 1.  This is an ordered list following a header.
 
-###### Header 6
+[comment]: # ###### Header 6
 
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
+[comment]: # | head1        | head two          | three |
+[comment]: # |:-------------|:------------------|:------|
+[comment]: # | ok           | good swedish fish | nice  |
+[comment]: # | out of stock | good and plenty   | nice  |
+[comment]: # | ok           | good `oreos`      | hmm   |
+[comment]: # | ok           | good `zoute` drop | yumm  |
 
-### There's a horizontal rule below this.
+[comment]: # ### There's a horizontal rule below this.
 
-* * *
+[comment]: # * * *
 
-### Here is an unordered list:
+[comment]: # ### Here is an unordered list:
 
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
+[comment]: # *   Item foo
 
-### And an ordered list:
+[comment]: # ### And an ordered list:
 
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
+[comment]: # 1.  Item one
 
-### And a nested list:
+[comment]: # ### And a nested list:
 
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
+[comment]: # - level 1 item
+[comment]: #   - level 2 item
+[comment]: #     - level 3 item
 
-### Small image
+[comment]: # ### Small image
 
-![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)
+[comment]: # ![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)
 
-### Large image
+[comment]: # ### Large image
 
-![Branching](https://guides.github.com/activities/hello-world/branching.png)
+[comment]: # ![Branching](https://guides.github.com/activities/hello-world/branching.png)
 
+[comment]: # ### Definition lists can be used with HTML syntax.
 
-### Definition lists can be used with HTML syntax.
+[comment]: # <dl>
+[comment]: # <dt>Name</dt>
+[comment]: # <dd>Godzilla</dd>
+[comment]: # <dt>Born</dt>
+[comment]: # <dd>1952</dd>
+[comment]: # <dt>Birthplace</dt>
+[comment]: # <dd>Japan</dd>
+[comment]: # <dt>Color</dt>
+[comment]: # <dd>Green</dd>
+[comment]: # </dl>
 
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
+[comment]: # ```
+[comment]: # Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
+[comment]: # ```
 
-```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-```
-
-```
-The final element.
-```
+[comment]: # ```
+[comment]: # The final element.
+[comment]: # ```
