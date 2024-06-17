@@ -1,7 +1,6 @@
 ---
 layout: default
 ---
-
 <script src="https://easyfaq.io/js/easyfaq.js" id="mfkim"></script>
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
