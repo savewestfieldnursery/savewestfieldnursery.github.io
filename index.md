@@ -5,6 +5,5 @@ layout: default
 <script src="https://easyfaq.io/js/easyfaq.js" id="mfkim"></script>
 
 ## Media coverage:
-
-[featured on BBC](https://www.bbc.co.uk/news/articles/clmmvlelk22o)
-[featured in Times Higher Educaiton](https://www.timeshighereducation.com/cn/news/parents-left-limbo-university-plans-site-nursery-closure)
+* [featured on BBC](https://www.bbc.co.uk/news/articles/clmmvlelk22o)
+* [featured in Times Higher Educaiton](https://www.timeshighereducation.com/cn/news/parents-left-limbo-university-plans-site-nursery-closure)
